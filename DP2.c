@@ -16,7 +16,7 @@
 #include <assert.h>
 
 typedef struct node{
-    int max_value; //maximum value of objects we can get at this node of the grid 
+    float max_value; //maximum value of objects we can get at this node of the grid 
     int previous_level_node; //node from the previous level.Transition from this node gave the max value 
     int number_of_items_taken; //how many items of previous node were taken (o elegxos)
 } node;
@@ -68,12 +68,12 @@ int main(){
 	
 	/* Allocate memory for node grid*/
 	node ** grid = (node **)malloc(K * sizeof(node *));
- 	for (i = 0; i <= K; i++)
+ 	for (i = 0; i < K; i++)  // was: i <= K ? If we want this: malloc needs to change
 		assert(grid[i] = (node *)malloc(NodesPerLevel[i]* sizeof(node)));
 
 	/*Initialize nodes*/
-	for (i = 0; i<= K; i++){
-		for (j = 0; j < NodesPerLevel[i]; i++){
+	for (i = 0; i < K; i++){  // was: i <= K ? If we want this: malloc needs to change
+		for (j = 0; j < NodesPerLevel[i]; j++){ // was: i++
 			grid[i][j].max_value = 0;
 			grid[i][j].previous_level_node = 0; 
 			grid[i][j].number_of_items_taken = 0;
