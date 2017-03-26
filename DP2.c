@@ -49,8 +49,10 @@ int main(){
 			printf("Please give the weight and value of object %d:\n", k);
 			fflush(stdin);
 			scanf("%f", &b[k]);
+			printf("b[%d] %f \n",k,b[k] );
 			fflush(stdin);
 			scanf("%f", &w[k]);
+			printf("w[%d] %f \n",k,w[k] );
 			if((K<=0)||(B<0)) 
 				printf("Both must be positive values. ");
 		}while((K<=0)||(B<0));	
@@ -58,28 +60,37 @@ int main(){
 		
 		
 	//The Dynamic Programming graph will have K number of levels. 
-	int *NodesPerLevel = (int *)malloc(K * sizeof(int));
+	int *NodesPerLevel = (int *)malloc(K+1 * sizeof(int));
 	
 	//Each level will have as many nodes as the number of the item k the load can carry 
 	//(how many items of weight b[k] can fit in total load's weight B)
+	printf("nodes per level--------------------------------------------------\n");
 	NodesPerLevel[0] = 1;
-	for (k=1; k<K; k++)
-		NodesPerLevel[k] = (B/b[k])+1;
+	for (k=0; k<K; k++){
+		NodesPerLevel[k+1] = (B/b[k])+1;
+		printf(" b[%d] = %f\n",k,b[k] );
+		printf("nodes per level %d : %d\n", k+1,NodesPerLevel[k+1]);
+	}
+	printf("----------------------------------------------------------------\n");
 	
 	/* Allocate memory for node grid*/
-	node ** grid = (node **)malloc(K * sizeof(node *));
+	node ** grid = (node **)malloc(K+1 * sizeof(node *));
  	for (i = 0; i <= K; i++)
 		assert(grid[i] = (node *)malloc(NodesPerLevel[i]* sizeof(node)));
 
+	printf("initialize nodes-------------------------------------------------\n");
 	/*Initialize nodes*/
 	for (i = 0; i<= K; i++){
-		for (j = 0; j < NodesPerLevel[i]; i++){
+		for (j = 0; j < NodesPerLevel[i]; j++){
+			printf("nodes per level %d : %d \n",i , NodesPerLevel[i]);
+			printf("j %d \n",j );
 			grid[i][j].max_value = 0;
 			grid[i][j].previous_level_node = 0; 
-			grid[i][j].number_of_items_taken = 0;
+			grid[i][j].number_of_items_taken = 0;			
+			printf("node %d,%d\n",i,j );
 		}
 	}
-
+	printf("----------------------------------------------------------------\n");
 	/*
 	* Dynamic Programming
 	*/
