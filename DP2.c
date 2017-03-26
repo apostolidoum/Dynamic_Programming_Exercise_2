@@ -98,12 +98,13 @@ int main(){
 	int transition_value;
 	for (i = 0; i < K; i++){
 		printf("first loop for level %d \n",i);
-		for (j = 0; j <= NodesPerLevel[i] - 1; j++){ 
+		for (j = 0; j < NodesPerLevel[i] ; j++){ 
 			printf("\t second loop for nodes per level %d, j %d\n", NodesPerLevel[i],j);
 			for (m = 0; m < NodesPerLevel[j+1]; m++){
 				printf("\t \t third loop for transitions m %d \n", m);
 				//calculate transition
 				transition_value = grid[i][j].max_value + (m*w[i]);
+				printf("\t \t transitions_value %d \n", transition_value);
 				//check that transition is withind limits
 				if (transition_value <= B){
 					//if transition is better than before update node at level j+1
@@ -120,7 +121,7 @@ int main(){
 	/* Print result */
 	printf("best value is : %d \n",grid[K][NodesPerLevel[K]-1].max_value );
 	int arrow = NodesPerLevel[K];
-	for(i = K; i>=0; i--){
+	for(i = K; i>0; i--){
 		printf("taken %d objects of type %d \n", grid[i][arrow].number_of_items_taken, i-1 );
 		arrow = grid[i][arrow].previous_level_node;
 	}
