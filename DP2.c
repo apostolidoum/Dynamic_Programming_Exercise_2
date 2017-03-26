@@ -91,14 +91,17 @@ int main(){
 	}
 
 	print_grid(grid,NodesPerLevel, K );
-	
+
 	/*
 	* Dynamic Programming
 	*/
 	int transition_value;
-	for (i = 0; i <= K; i++){
+	for (i = 0; i < K; i++){
+		printf("first loop for level %d \n",i);
 		for (j = 0; j <= NodesPerLevel[i] - 1; j++){ 
-			for (m = 0; m <= NodesPerLevel[j+1]; m++){
+			printf("\t second loop for nodes per level %d, j %d\n", NodesPerLevel[i],j);
+			for (m = 0; m < NodesPerLevel[j+1]; m++){
+				printf("\t \t third loop for transitions m %d \n", m);
 				//calculate transition
 				transition_value = grid[i][j].max_value + (m*w[i]);
 				//check that transition is withind limits
