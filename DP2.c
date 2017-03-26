@@ -15,11 +15,18 @@
 #include <stdlib.h>
 #include <assert.h>
 
+
+
 typedef struct node{
     int max_value; //maximum value of objects we can get at this node of the grid 
     int previous_level_node; //node from the previous level.Transition from this node gave the max value 
     int number_of_items_taken; //how many items of previous node were taken (o elegxos)
 } node;
+
+/*
+* Prints the grid 
+*/
+void print_grid( node ** grid,int * NodesPerLevel, int K );
 
 int main(){
 	
@@ -64,33 +71,27 @@ int main(){
 	
 	//Each level will have as many nodes as the number of the item k the load can carry 
 	//(how many items of weight b[k] can fit in total load's weight B)
-	printf("nodes per level--------------------------------------------------\n");
 	NodesPerLevel[0] = 1;
 	for (k=0; k<K; k++){
 		NodesPerLevel[k+1] = (B/b[k])+1;
-		printf(" b[%d] = %f\n",k,b[k] );
-		printf("nodes per level %d : %d\n", k+1,NodesPerLevel[k+1]);
 	}
-	printf("----------------------------------------------------------------\n");
 	
 	/* Allocate memory for node grid*/
 	node ** grid = (node **)malloc(K+1 * sizeof(node *));
  	for (i = 0; i <= K; i++)
 		assert(grid[i] = (node *)malloc(NodesPerLevel[i]* sizeof(node)));
 
-	printf("initialize nodes-------------------------------------------------\n");
 	/*Initialize nodes*/
 	for (i = 0; i<= K; i++){
 		for (j = 0; j < NodesPerLevel[i]; j++){
-			printf("nodes per level %d : %d \n",i , NodesPerLevel[i]);
-			printf("j %d \n",j );
 			grid[i][j].max_value = 0;
 			grid[i][j].previous_level_node = 0; 
 			grid[i][j].number_of_items_taken = 0;			
-			printf("node %d,%d\n",i,j );
 		}
 	}
-	printf("----------------------------------------------------------------\n");
+
+	print_grid(grid,NodesPerLevel, K );
+	
 	/*
 	* Dynamic Programming
 	*/
@@ -126,4 +127,15 @@ int main(){
 	fflush(stdin);
 	getchar();
 	return 0;
+}
+
+void print_grid( node ** grid,int * NodesPerLevel, int K ){
+	printf("printing function of grid\n");
+	int i,j;
+	for (i = 0; i<= K; i++){
+		for (j = 0; j < NodesPerLevel[i]; j++){
+			printf("grid[%d][%d] max_value: %d, previous_level_node: %d, number_of_items_taken: %d \n", i,j, grid[i][j].max_value,grid[i][j].previous_level_node ,grid[i][j].number_of_items_taken);
+		}
+	}
+	return;
 }
