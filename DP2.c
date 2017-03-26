@@ -18,7 +18,7 @@
 
 
 typedef struct node{
-    int max_value; //maximum value of objects we can get at this node of the grid 
+    float max_value; //maximum value of objects we can get at this node of the grid 
     int previous_level_node; //node from the previous level.Transition from this node gave the max value 
     int number_of_items_taken; //how many items of previous node were taken (o elegxos)
 } node;
@@ -116,9 +116,22 @@ int main(){
 
 	print_grid(grid,NodesPerLevel, K );
 
-	/* Print result */
-	printf("best value is : %d \n",grid[K][NodesPerLevel[K]-1].max_value );
-	int arrow = NodesPerLevel[K] -1;
+	/* 
+	*Print result 
+	*/
+	//find max value at last level
+	float max = -1;
+	int max_position = -1;
+	for(j = 0; j<NodesPerLevel[K]; j++){
+		if (grid[K][j].max_value > max){
+			max = grid[K][j].max_value;	
+			max_position = j;
+		}
+	}
+	printf("grid[K][j].max_value = %f \n",max );
+	printf("max_position = %d \n",j );
+	printf("best value is : %f \n",grid[K][max_position].max_value );
+	int arrow = max_position;
 	for(i = K; i>0; i--){
 		printf("taken %d objects of type %d \n", grid[i][arrow].number_of_items_taken, i-1 );
 		arrow = grid[i][arrow].previous_level_node;
@@ -136,7 +149,7 @@ void print_grid( node ** grid,int * NodesPerLevel, int K ){
 	int i,j;
 	for (i = 0; i<= K; i++){
 		for (j = 0; j < NodesPerLevel[i]; j++){
-			printf("grid[%d][%d] max_value: %d, previous_level_node: %d, number_of_items_taken: %d \n", i,j, grid[i][j].max_value,grid[i][j].previous_level_node ,grid[i][j].number_of_items_taken);
+			printf("grid[%d][%d] max_value: %f, previous_level_node: %d, number_of_items_taken: %d \n", i,j, grid[i][j].max_value,grid[i][j].previous_level_node ,grid[i][j].number_of_items_taken);
 		}
 	}
 	printf("------------------------------------------------------------------------------------------\n");
