@@ -100,8 +100,8 @@ int main(){
 		printf("first loop for level %d \n",i);
 		for (j = 0; j < NodesPerLevel[i] ; j++){ 
 			printf("\t second loop for nodes per level %d, j %d\n", NodesPerLevel[i],j);
-			for (m = 0; m < NodesPerLevel[j+1]; m++){
-				printf("\t \t third loop for transitions m %d \n", m);
+			for (m = 0; m < NodesPerLevel[i+1]; m++){
+				printf("\t \t third loop for transitions m %d |NodesPerNextLevel %d\n", m,NodesPerLevel[j+1]);
 				//calculate transition
 				transition_value = grid[i][j].max_value + (m*w[i]);
 				printf("\t \t transitions_value %d \n", transition_value);
@@ -118,6 +118,7 @@ int main(){
 		}
 	}
 
+	print_grid(grid,NodesPerLevel, K );
 	/* Print result */
 	printf("best value is : %d \n",grid[K][NodesPerLevel[K]-1].max_value );
 	int arrow = NodesPerLevel[K];
