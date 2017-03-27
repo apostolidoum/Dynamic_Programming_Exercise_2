@@ -17,9 +17,9 @@
 
 typedef struct node{
     float max_value; //maximum value of objects we can get at this node of the grid 
-    float weight_for_max_value;
+    float weight_for_max_value; //the objects' weight for the max value
     int previous_level_node; //node from the previous level.Transition from this node gave the max value 
-    int number_of_items_taken; //how many items of previous node were taken (o elegxos)
+    int number_of_items_taken; //how many items of previous node were taken
 } node;
 
 //prints the grid's state
@@ -144,7 +144,7 @@ void print_grid( node ** grid,int * NodesPerLevel, int K ){
 	int i,j;
 	for (i = 0; i<= K; i++){
 		for (j = 0; j < NodesPerLevel[i]; j++){
-			printf("grid[%d][%d] max_value: %f, previous_level_node: %d, number_of_items_taken: %d \n", i,j, grid[i][j].max_value,grid[i][j].previous_level_node ,grid[i][j].number_of_items_taken);
+			printf("grid[%d][%d] max_value: %f, previous_level_node: %d, number_of_items_taken: %d, weight_for_max_value: %f \n", i,j, grid[i][j].max_value,grid[i][j].previous_level_node, grid[i][j].number_of_items_taken, grid[i][j].weight_for_max_value);
 		}
 	}
 	printf("------------------------------------------------------------------------------------------\n");
